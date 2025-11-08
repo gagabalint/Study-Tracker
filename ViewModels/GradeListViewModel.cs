@@ -66,6 +66,7 @@ namespace StudyTracker.ViewModels
 
                 else // ÚJ JEGY volt
                 {
+                    await database.SaveGradeAsync(value);
                     Grades.Add(value);
                 }
             }
