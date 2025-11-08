@@ -9,21 +9,74 @@
              Loaded="OnLoaded">
 
     <Grid RowDefinitions="Auto, *">
-        <Label Text="Grades" FontSize="Large" FontAttributes="Bold" Padding="10"/>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Grades}">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto, Auto, Auto" Padding="10">
+
+            <Button Grid.Column="0"
+                Text="Vissza"
+                Command="{Binding CancelCommand}"
+                HorizontalOptions="Start"/>
+
+            <Label Grid.Column="1"
+               Text="{Binding SubjectName, StringFormat='Jegyek: {0}'}" 
+               FontSize="Large" FontAttributes="Bold"
+               VerticalOptions="Center" HorizontalOptions="Center"/>
+
+            <Button Grid.Column="2"
+                Text="Új jegy"
+                Command="{Binding AddNewGradeCommand}"
+                HorizontalOptions="End"/>
+
+            <Button Grid.Column="3"
+                Text="Szerkeszt"
+                Command="{Binding EditGradeCommand}"
+                HorizontalOptions="End"/>
+
+            <Button Grid.Column="4"
+                Text="Töröl"
+                Command="{Binding DeleteGradeCommand}"
+                HorizontalOptions="End"/>
+
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Grades}"
+                            SelectionMode="Single"
+                             SelectedItem="{Binding SelectedGrade}">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Grade">
-                    <Frame Padding="10" Margin="5">
+                    <Frame Padding="10" Margin="5" CornerRadius="8">
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="Black" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
                         <HorizontalStackLayout Spacing="20">
-                            <Label Text="{Binding Value, StringFormat='Grade: {0}'}" 
-                                   FontSize="Medium" FontAttributes="Bold"/>
+                            <Label Text="{Binding Value, StringFormat='Jegy: {0}'}" 
+                           FontSize="Medium" 
+                           FontAttributes="Bold"/>
+
                             <Label Text="{Binding Date, StringFormat='{0:yyyy-MM-dd}'}" 
-                                   FontSize="Medium" VerticalOptions="Center"/>
+                           FontSize="Medium" 
+                           VerticalOptions="Center"/>
                         </HorizontalStackLayout>
+
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+
         </CollectionView>
+
     </Grid>
 </ContentPage>

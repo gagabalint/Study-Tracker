@@ -24,11 +24,7 @@
                 <DataTemplate x:DataType="models:Subject">
                     <Frame Padding="15" Margin="5" CornerRadius="10" 
                    BackgroundColor="White">
-                        <!--<Frame.GestureRecognizers>
-                            <TapGestureRecognizer 
-                        Command="{Binding BindingContext.GoToGradesAsyncCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
-                        CommandParameter="{Binding .}"/>
-                        </Frame.GestureRecognizers>-->
+                        
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">
 

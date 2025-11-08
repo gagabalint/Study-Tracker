@@ -24,6 +24,7 @@ namespace StudyTracker.Models
         [ObservableProperty]
         [property: Indexed]
         int subjectId;
-        
+
+       
     }
 }

@@ -73,6 +73,9 @@
 	  <Compile Update="Views\GradeListPage.xaml.cs">
 	    <DependentUpon>GradeListPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\EditGradePage.xaml.cs">
+	    <DependentUpon>EditGradePage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -80,6 +83,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\GradeListPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\EditGradePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\SubjectListPage.xaml">
