@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
+             x:Class="StudyTracker.EditSubjectPage"
+             x:DataType="viewmodels:EditSubjectViewModel"
+             Title="Edit Subject">
+
+    <VerticalStackLayout Spacing="10" Padding="20" VerticalOptions="Center">
+        <Label Text="Subject Name" FontAttributes="Bold"/>
+
+        <Entry Text="{Binding SubjectToEdit.Name}" Placeholder="E.g. Mobile Programming"/>
+
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Save" Command="{Binding SaveCommand}"/>
+            <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:StudyTracker.Models"
+             xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
+             x:Class="StudyTracker.GradeListPage"
+             x:DataType="viewmodels:GradeListViewModel"
+             Title="{Binding SubjectName, StringFormat='Grades for {0}'}"
+             Loaded="OnLoaded">
+
+    <Grid RowDefinitions="Auto, *">
+        <Label Text="Grades" FontSize="Large" FontAttributes="Bold" Padding="10"/>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Grades}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Grade">
+                    <Frame Padding="10" Margin="5">
+                        <HorizontalStackLayout Spacing="20">
+                            <Label Text="{Binding Value, StringFormat='Grade: {0}'}" 
+                                   FontSize="Medium" FontAttributes="Bold"/>
+                            <Label Text="{Binding Date, StringFormat='{0:yyyy-MM-dd}'}" 
+                                   FontSize="Medium" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

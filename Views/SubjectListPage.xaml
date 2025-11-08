@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
+             xmlns:models="clr-namespace:StudyTracker.Models"
+             x:Class="StudyTracker.SubjectListPage"
+             x:DataType="viewmodels:SubjectListViewModel"
+             Title="My Subjects"
+             Loaded="OnLoaded">
+    <Grid RowDefinitions="Auto, *" RowSpacing="10" Padding="10">
+
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" HorizontalOptions="Center">
+            <Button Text="New Subject" Command="{Binding AddNewSubjectCommand}" />
+            <Button Text="Edit" Command="{Binding EditSubjectCommand}"/>
+            <Button Text="Delete" Command="{Binding DeleteSubjectCommand}" />
+            <Button Text="Grades" Command="{Binding GoToGradesAsyncCommand}"/>
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Subjects}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedSubject}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Subject">
+                    <Frame Padding="15" Margin="5" CornerRadius="10" 
+                   BackgroundColor="White">
+                        <!--<Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                        Command="{Binding BindingContext.GoToGradesAsyncCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                        CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>-->
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+
+                                <VisualState Name="Normal">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="Black" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightGray" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Label Text="{Binding Name}" 
+                       FontSize="Medium" 
+                       FontAttributes="Bold"/>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
