@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:StudyTracker.Models"
+             xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
+             x:Class="StudyTracker.MaterialListPage"
+             x:DataType="viewmodels:MaterialListViewModel"
+             Title="{Binding SubjectName, StringFormat='Tananyagok: {0}'}"
+             Loaded="OnLoaded">
+
+    <Grid RowDefinitions="Auto, *">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="10">
+            <Button Grid.Column="0"
+                    Text="Vissza"
+                    Command="{Binding GoBackAsyncCommand}"
+                    HorizontalOptions="Start"/>
+
+            <Button Grid.Column="2"
+                    Text="Új tananyag"
+                    HorizontalOptions="End"/>
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Materials}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Material">
+                    <Frame Padding="10" Margin="5" CornerRadius="8">
+                        <VerticalStackLayout Spacing="10">
+
+                            <Image Source="{Binding PictureUri}"
+                                   HeightRequest="200"
+                                   Aspect="AspectFill"
+                                   BackgroundColor="LightGray"/>
+
+                            <Label Text="{Binding Description}"
+                                   FontSize="Medium"
+                                   FontAttributes="Bold"/>
+
+                            <Label Text="{Binding Date, StringFormat='{0:yyyy-MM-dd}'}"
+                                   FontSize="Small" />
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

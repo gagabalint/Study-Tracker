@@ -32,6 +32,8 @@ namespace StudyTracker
             builder.Services.AddTransient<GradeListPage>();
             builder.Services.AddTransient<EditGradeViewModel>();
             builder.Services.AddTransient<EditGradePage>();
+            builder.Services.AddTransient<MaterialListPage>();
+            builder.Services.AddTransient<MaterialListViewModel>();
 
             return builder.Build();
         }
