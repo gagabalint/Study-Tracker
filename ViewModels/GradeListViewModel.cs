@@ -52,7 +52,7 @@ namespace StudyTracker.ViewModels
                 return;
             try
             {
-
+                await database.SaveGradeAsync(value);
 
                 if (SelectedGrade != null && SelectedGrade.Id == value.Id)
                 {
@@ -66,7 +66,7 @@ namespace StudyTracker.ViewModels
 
                 else // ÚJ JEGY volt
                 {
-                    await database.SaveGradeAsync(value);
+                    
                     Grades.Add(value);
                 }
             }

@@ -71,7 +71,7 @@ namespace StudyTracker.ViewModels
                 return;
             if (selectedSubject != null)
             {
-                await database.SaveSubjectAsync(selectedSubject);
+                await database.SaveSubjectAsync(value);
                 var oldSubject = subjects.Where(i => i.Id == selectedSubject.Id).FirstOrDefault();
                 if (oldSubject != null)
                 {

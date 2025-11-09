@@ -19,6 +19,7 @@ namespace StudyTracker.ViewModels
         
         public EditGradeViewModel()
         {
+            gradeToEdit = new Grade();
         }
 
         [RelayCommand]

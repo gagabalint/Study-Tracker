@@ -52,15 +52,41 @@ namespace StudyTracker.Data
             }
         }
 
-        public Task<int> DeleteSubjectAsync(Subject subject)
+        public async Task<int> DeleteSubjectAsync(Subject subject)
         {
-            return database.DeleteAsync(subject);
+            var grades = await GetGradesForSubjectAsync(subject.Id);
+            if (grades.Count > 0)
+            { 
+                foreach (var grade in grades) {await database.DeleteAsync(grade); }
+            }
+            var materials = await GetMaterialsForSubjectAsync(subject.Id);
+            if (materials.Count > 0)
+            {
+                foreach (var material in materials)
+                {
+                    if (!string.IsNullOrEmpty(material.PictureUri) && File.Exists(material.PictureUri))
+                    {
+                        try
+                        {
+                            File.Delete(material.PictureUri);
+                        }
+                        catch (Exception ex)
+                        {
+
+                            //TODO
+                        }
+
+                    }
+                    await database.DeleteAsync(material);
+                }
+
+            }
+
+            return await database.DeleteAsync(subject);
         }
 
-        // --- Grade implementáció ---
         public Task<List<Grade>> GetGradesForSubjectAsync(int subjectId)
         {
-            // Lekérdezzük az összes jegyet, ami az adott tantárgy ID-hoz tartozik
             return database.Table<Grade>().Where(g => g.SubjectId == subjectId).ToListAsync();
         }
 
@@ -81,7 +107,6 @@ namespace StudyTracker.Data
             return database.DeleteAsync(grade);
         }
 
-        // --- Material implementáció ---
         public Task<List<Material>> GetMaterialsForSubjectAsync(int subjectId)
         {
             return database.Table<Material>().Where(m => m.SubjectId == subjectId).ToListAsync();
