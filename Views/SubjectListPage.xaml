@@ -13,7 +13,6 @@
             <Button Text="New Subject" Command="{Binding AddNewSubjectCommand}" />
             <Button Text="Edit" Command="{Binding EditSubjectCommand}"/>
             <Button Text="Delete" Command="{Binding DeleteSubjectCommand}" />
-            <Button Text="Grades" Command="{Binding GoToGradesAsyncCommand}"/>
         </HorizontalStackLayout>
 
         <CollectionView Grid.Row="1"
@@ -22,35 +21,54 @@
                         SelectedItem="{Binding SelectedSubject}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Subject">
-                    <Frame Padding="15" Margin="5" CornerRadius="10" 
-                   BackgroundColor="White">
-                        
+
+                    <Frame Padding="10" Margin="5" CornerRadius="10" 
+                           BackgroundColor="White">
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup Name="CommonStates">
-
                                 <VisualState Name="Normal">
                                     <VisualState.Setters>
                                         <Setter Property="BackgroundColor" Value="Black" />
                                     </VisualState.Setters>
                                 </VisualState>
-
                                 <VisualState Name="Selected">
                                     <VisualState.Setters>
                                         <Setter Property="BackgroundColor" Value="LightGray" />
                                     </VisualState.Setters>
                                 </VisualState>
-
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
-                        <Label Text="{Binding Name}" 
-                       FontSize="Medium" 
-                       FontAttributes="Bold"/>
+                        <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10">
+
+                            <Label Grid.Column="0"
+                                   Text="{Binding Name}" 
+                                   FontSize="Medium" 
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"/>
+
+                            <Button Grid.Column="1"
+                                    Text="Jegyek"
+                                    FontSize="Small"
+                                    Padding="10,5"
+                                    MinimumHeightRequest="0" 
+                                    Command="{Binding BindingContext.GoToGradesCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                    CommandParameter="{Binding .}"/>
+
+                            <Button Grid.Column="2"
+                                    Text="Tananyag"
+                                    FontSize="Small"
+                                    Padding="10,5"
+                                    MinimumHeightRequest="0"
+                                    Command="{Binding BindingContext.GoToMaterialsCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                    CommandParameter="{Binding .}"/>
+
+                        </Grid>
                     </Frame>
 
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
     </Grid>
 </ContentPage>

@@ -13,7 +13,7 @@
         <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="10">
             <Button Grid.Column="0"
                     Text="Vissza"
-                    Command="{Binding GoBackAsyncCommand}"
+                    Command="{Binding CancelCommand}"
                     HorizontalOptions="Start"/>
 
             <Button Grid.Column="2"

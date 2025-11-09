@@ -24,22 +24,41 @@ namespace StudyTracker.ViewModels
         [ObservableProperty]
         Subject selectedSubject;
         [RelayCommand]
-        async void GoToGradesAsync()
+        async Task GoToGradesAsync(Subject subject)
         {
-            if (selectedSubject == null)
+            if (subject == null)
             {
-                WeakReferenceMessenger.Default.Send("Jelölj ki egy tantárgyat a jegyek megtekintéséhez!");
+                WeakReferenceMessenger.Default.Send("A tantárgy nem található!");
                 return;
             }
 
             try
             {
-                var param = new ShellNavigationQueryParameters { { "SubjectId", selectedSubject.Id } };
+                var param = new ShellNavigationQueryParameters { { "SubjectId", subject.Id } };
                await Shell.Current.GoToAsync("gradelist", param);
             }
             catch (Exception ex) {
                 Debug.WriteLine($"Navigációs hiba a jegyek oldalára: {ex.Message}");
                 WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a jegyek oldalt.");
+            }
+        }
+        [RelayCommand]
+        async Task GoToMaterialsAsync(Subject subject)
+        {
+            if (subject == null)
+            {
+                WeakReferenceMessenger.Default.Send("A tantárgy nem található!");
+                return;
+            }
+
+            try
+            {
+                var param = new ShellNavigationQueryParameters { { "SubjectId", subject.Id } };
+               await Shell.Current.GoToAsync("materiallist", param);
+            }
+            catch (Exception ex) {
+                Debug.WriteLine($"Navigációs hiba a tananyagok oldalára: {ex.Message}");
+                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a tananyagok oldalt.");
             }
         }
         [ObservableProperty]
@@ -54,7 +73,7 @@ namespace StudyTracker.ViewModels
         {
             try
             {
-                selectedSubject = null;
+                SelectedSubject = null;
                 var newSubject = new Subject { Name = string.Empty };
                 var param = new ShellNavigationQueryParameters { { "Subject", newSubject } };
                 await Shell.Current.GoToAsync("editsubject", param);
@@ -69,10 +88,10 @@ namespace StudyTracker.ViewModels
         {
             if (value == null)
                 return;
-            if (selectedSubject != null)
+            if (SelectedSubject != null)
             {
                 await database.SaveSubjectAsync(value);
-                var oldSubject = subjects.Where(i => i.Id == selectedSubject.Id).FirstOrDefault();
+                var oldSubject = subjects.Where(i => i.Id == SelectedSubject.Id).FirstOrDefault();
                 if (oldSubject != null)
                 {
                     subjects.Remove(oldSubject);
@@ -91,14 +110,14 @@ namespace StudyTracker.ViewModels
         [RelayCommand]
         async Task EditSubjectAsync()
         {
-            if (selectedSubject == null)
+            if (SelectedSubject == null)
             {
                 WeakReferenceMessenger.Default.Send("Hiba: Jelölj ki egy tantárgyat a módosításhoz!");
                 return;
             }
             try
             {
-                var param = new ShellNavigationQueryParameters { { "Subject", selectedSubject } };
+                var param = new ShellNavigationQueryParameters { { "Subject", SelectedSubject } };
                 await Shell.Current.GoToAsync("editsubject", param);
             }
             catch (Exception e)
@@ -111,21 +130,21 @@ namespace StudyTracker.ViewModels
         [RelayCommand]
         async Task DeleteSubjectAsync()
         {
-            if (selectedSubject == null)
+            if (SelectedSubject == null)
             {
                 WeakReferenceMessenger.Default.Send("Hiba: Jelölj ki egy tantárgyat a törléshez!");
                 return;
             }
 
-            bool response = await Shell.Current.DisplayAlert("Törlés", $"Biztosan törölni szeretnéd a {selectedSubject.Name} tantárgyat?", "Igen", "Nem");
+            bool response = await Shell.Current.DisplayAlert("Törlés", $"Biztosan törölni szeretnéd a {SelectedSubject.Name} tantárgyat?", "Igen", "Nem");
             if (response)
             {
                 try
                 {
 
-                    await database.DeleteSubjectAsync(selectedSubject);
+                    await database.DeleteSubjectAsync(SelectedSubject);
                     subjects.Remove(SelectedSubject);
-                    selectedSubject = null;
+                    SelectedSubject = null;
 
                 }
                 catch (Exception e)

@@ -12,8 +12,8 @@ public partial class MaterialListPage : ContentPage
 		BindingContext=viewModel;
 
 	}
-	private async void OnLoaded(object? sender, Exception e)
+	 async void OnLoaded(object? sender, EventArgs e)
 	{
-		viewModel.LoadDataCommand.ExecuteAsync(null);
+	await	viewModel.LoadDataCommand.ExecuteAsync(null);
 	}
 }
