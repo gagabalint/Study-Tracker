@@ -24,16 +24,34 @@ namespace StudyTracker.ViewModels
         [ObservableProperty]
         Subject selectedSubject;
 
+       
+        [ObservableProperty]
+        Subject savedSubject;
+        public SubjectListViewModel(IStudyTrackerDatabase database)
+        {
+            this.database = database;
+        }
+
         [RelayCommand]
         void SelectSubject(Subject subject)
         {
-            if (SelectedSubject!=null&&subject.Id == SelectedSubject.Id)
+            if (SelectedSubject != null && subject.Id == SelectedSubject.Id)
                 SelectedSubject = null;
             else
                 SelectedSubject = subject;
 
         }
 
+        [RelayCommand]
+        async Task GoToSummaryAsync()
+        {
+            try
+            {
+                await Shell.Current.GoToAsync("summary");
+
+            }
+            catch (Exception ex) { WeakReferenceMessenger.Default.Send("gatya"); }
+        }
 
         [RelayCommand]
         async Task GoToGradesAsync(Subject subject)
@@ -75,12 +93,7 @@ namespace StudyTracker.ViewModels
                 WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a tananyagok oldalt.");
             }
         }
-        [ObservableProperty]
-        Subject savedSubject;
-        public SubjectListViewModel(IStudyTrackerDatabase database)
-        {
-            this.database = database;
-        }
+
 
         [RelayCommand]
         async Task AddNewSubjectAsync()

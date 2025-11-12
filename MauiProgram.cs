@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using StudyTracker.Data;
 using StudyTracker.ViewModels;
+using Microcharts.Maui;
 
 
 
@@ -12,7 +13,8 @@ namespace StudyTracker
         {
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>()
+                .UseMauiApp<App>().UseMauiApp<App>()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -36,6 +38,8 @@ namespace StudyTracker
             builder.Services.AddTransient<MaterialListViewModel>();
             builder.Services.AddTransient<EditMaterialViewModel>();
             builder.Services.AddTransient<EditMaterialPage>();
+            builder.Services.AddTransient<SummaryViewModel>();
+            builder.Services.AddTransient<SummaryPage>();
 
             return builder.Build();
         }

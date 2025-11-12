@@ -13,6 +13,7 @@
             <Button Text="New Subject" Command="{Binding AddNewSubjectCommand}" />
             <Button Text="Edit" Command="{Binding EditSubjectCommand}"/>
             <Button Text="Delete" Command="{Binding DeleteSubjectCommand}" />
+            <Button Text="Summary" Command="{Binding GoToSummaryCommand}" />
         </HorizontalStackLayout>
 
         <CollectionView Grid.Row="1"

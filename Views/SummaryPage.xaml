@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui" 
+             x:Class="StudyTracker.SummaryPage"
+             x:DataType="viewmodels:SummaryViewModel"
+             Title="Összegző"
+             Loaded="OnLoaded">
+
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, *, Auto">
+
+           
+            <HorizontalStackLayout Grid.Row="0" Padding="10" HorizontalOptions="Center" Spacing="20">
+                <Button Text="Vissza" Command="{Binding CancelCommand}" />
+                <Button Text="Riport megosztása (PDF)" Command="{Binding ShareReportCommand}" />
+            </HorizontalStackLayout>
+
+          
+            <microcharts:ChartView Grid.Row="1" 
+                                   Chart="{Binding SubjectChart}"
+                                   Margin="10" 
+                                   VerticalOptions="Fill" />
+
+            <Label Grid.Row="2" 
+                   Text="A diagram a legalább egy jeggyel rendelkező tantárgyak átlagát mutatja."
+                   HorizontalOptions="Center" Padding="10" FontSize="Small"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

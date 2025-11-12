@@ -10,6 +10,7 @@
             Routing.RegisterRoute("editgrade", typeof(EditGradePage));
             Routing.RegisterRoute("materiallist", typeof(MaterialListPage));
             Routing.RegisterRoute("editmaterial", typeof(EditMaterialPage));
+            Routing.RegisterRoute("summary", typeof(SummaryPage));
         }
     }
 }
