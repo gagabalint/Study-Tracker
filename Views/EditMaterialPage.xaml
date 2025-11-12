@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
+             x:Class="StudyTracker.EditMaterialPage"
+             x:DataType="viewmodels:EditMaterialViewModel"
+             Title="Tananyag szerkesztése">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+
+            <Label Text="Kép" FontAttributes="Bold"/>
+            <Frame HeightRequest="250" Padding="0" CornerRadius="8" BorderColor="Gray">
+                <Image Source="{Binding MaterialToEdit.PictureUri}"
+                       Aspect="AspectFill"
+                       BackgroundColor="LightGray"/>
+            </Frame>
+
+            <Button Text="Fotó készítése" 
+                    Command="{Binding TakePhotoCommand}"/>
+
+            <Label Text="Leírás" FontAttributes="Bold"/>
+            <Entry Text="{Binding MaterialToEdit.Description}"
+                   Placeholder="Pl. 8. heti gyakorlat, tétel..."/>
+
+            <Label Text="Dátum" FontAttributes="Bold"/>
+            <DatePicker Date="{Binding MaterialToEdit.Date}" />
+
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="Save" Command="{Binding SaveCommand}"/>
+                <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

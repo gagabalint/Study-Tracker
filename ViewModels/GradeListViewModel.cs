@@ -64,7 +64,7 @@ namespace StudyTracker.ViewModels
                     Grades.Add(value);
                 }
 
-                else // ÚJ JEGY volt
+                else 
                 {
                     
                     Grades.Add(value);
@@ -75,6 +75,15 @@ namespace StudyTracker.ViewModels
             {
                 SelectedGrade = null;
             }
+
+        }
+        [RelayCommand]
+        void SelectSubject(Grade grade)
+        {
+            if (SelectedGrade != null && grade.Id == SelectedGrade.Id)
+                SelectedGrade = null;
+            else
+                SelectedGrade = grade;
 
         }
         [RelayCommand]
@@ -108,8 +117,7 @@ namespace StudyTracker.ViewModels
         {
             if (SelectedGrade == null)
             {
-                // Használj WeakReferenceMessengert, ha szeretnéd
-                await Shell.Current.DisplayAlert("Hiba", "Nincs jegy kiválasztva a szerkesztéshez.", "OK");
+                WeakReferenceMessenger.Default.Send("Navigációs hiba a jegyek oldalra");
                 return;
             }
 
@@ -117,7 +125,6 @@ namespace StudyTracker.ViewModels
             {
                 var param = new ShellNavigationQueryParameters
                 {
-                    // A "GradeToEdit" kulcson elküldjük a KIVÁLASZTOTT jegyet
                     { "GradeToEdit", SelectedGrade }
                 };
 

@@ -17,10 +17,7 @@
                 Command="{Binding CancelCommand}"
                 HorizontalOptions="Start"/>
 
-            <Label Grid.Column="1"
-               Text="{Binding SubjectName, StringFormat='Jegyek: {0}'}" 
-               FontSize="Large" FontAttributes="Bold"
-               VerticalOptions="Center" HorizontalOptions="Center"/>
+            
 
             <Button Grid.Column="2"
                 Text="Új jegy"
@@ -47,20 +44,11 @@
                 <DataTemplate x:DataType="models:Grade">
                     <Frame Padding="10" Margin="5" CornerRadius="8">
 
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-                                <VisualState Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="Black" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="LightGray" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding BindingContext.SelectSubjectCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
 
                         <HorizontalStackLayout Spacing="20">
                             <Label Text="{Binding Value, StringFormat='Jegy: {0}'}" 

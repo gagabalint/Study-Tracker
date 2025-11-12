@@ -25,19 +25,14 @@
                     <Frame Padding="10" Margin="5" CornerRadius="10" 
                            BackgroundColor="White">
 
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding BindingContext.SelectSubjectCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
                         <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup Name="CommonStates">
-                                <VisualState Name="Normal">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="Black" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState Name="Selected">
-                                    <VisualState.Setters>
-                                        <Setter Property="BackgroundColor" Value="LightGray" />
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
+                            
+                            
                         </VisualStateManager.VisualStateGroups>
 
                         <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10">

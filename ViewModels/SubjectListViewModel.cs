@@ -23,6 +23,18 @@ namespace StudyTracker.ViewModels
 
         [ObservableProperty]
         Subject selectedSubject;
+
+        [RelayCommand]
+        void SelectSubject(Subject subject)
+        {
+            if (SelectedSubject!=null&&subject.Id == SelectedSubject.Id)
+                SelectedSubject = null;
+            else
+                SelectedSubject = subject;
+
+        }
+
+
         [RelayCommand]
         async Task GoToGradesAsync(Subject subject)
         {
@@ -35,9 +47,10 @@ namespace StudyTracker.ViewModels
             try
             {
                 var param = new ShellNavigationQueryParameters { { "SubjectId", subject.Id } };
-               await Shell.Current.GoToAsync("gradelist", param);
+                await Shell.Current.GoToAsync("gradelist", param);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.WriteLine($"Navigációs hiba a jegyek oldalára: {ex.Message}");
                 WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a jegyek oldalt.");
             }
@@ -54,9 +67,10 @@ namespace StudyTracker.ViewModels
             try
             {
                 var param = new ShellNavigationQueryParameters { { "SubjectId", subject.Id } };
-               await Shell.Current.GoToAsync("materiallist", param);
+                await Shell.Current.GoToAsync("materiallist", param);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.WriteLine($"Navigációs hiba a tananyagok oldalára: {ex.Message}");
                 WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a tananyagok oldalt.");
             }

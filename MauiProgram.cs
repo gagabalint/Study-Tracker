@@ -34,6 +34,8 @@ namespace StudyTracker
             builder.Services.AddTransient<EditGradePage>();
             builder.Services.AddTransient<MaterialListPage>();
             builder.Services.AddTransient<MaterialListViewModel>();
+            builder.Services.AddTransient<EditMaterialViewModel>();
+            builder.Services.AddTransient<EditMaterialPage>();
 
             return builder.Build();
         }

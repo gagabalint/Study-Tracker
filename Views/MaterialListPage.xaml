@@ -10,35 +10,51 @@
 
     <Grid RowDefinitions="Auto, *">
 
-        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto" Padding="10">
+        <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto, Auto, Auto" Padding="10">
             <Button Grid.Column="0"
-                    Text="Vissza"
-                    Command="{Binding CancelCommand}"
-                    HorizontalOptions="Start"/>
+                Text="Vissza"
+                Command="{Binding CancelCommand}"
+                HorizontalOptions="Start"/>
 
             <Button Grid.Column="2"
-                    Text="Új tananyag"
-                    HorizontalOptions="End"/>
+                Text="Új"
+                Command="{Binding AddNewMaterialCommand}"
+                HorizontalOptions="End"/>
+            <Button Grid.Column="3"
+                Text="Szerkeszt"
+                Command="{Binding EditMaterialCommand}"
+                HorizontalOptions="End"/>
+            <Button Grid.Column="4"
+                Text="Töröl"
+                Command="{Binding DeleteMaterialCommand}"
+                HorizontalOptions="End"/>
         </Grid>
 
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Materials}">
+        <CollectionView Grid.Row="1" 
+                    ItemsSource="{Binding Materials}"
+                    SelectedItem="{Binding SelectedMaterial}"
+                    SelectionMode="Single">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Material">
                     <Frame Padding="10" Margin="5" CornerRadius="8">
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding BindingContext.SelectSubjectCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+
                         <VerticalStackLayout Spacing="10">
-
                             <Image Source="{Binding PictureUri}"
-                                   HeightRequest="200"
-                                   Aspect="AspectFill"
-                                   BackgroundColor="LightGray"/>
-
+                               HeightRequest="200"
+                               Aspect="AspectFill"
+                               BackgroundColor="LightGray"/>
                             <Label Text="{Binding Description}"
-                                   FontSize="Medium"
-                                   FontAttributes="Bold"/>
-
+                               FontSize="Medium"
+                               FontAttributes="Bold"/>
                             <Label Text="{Binding Date, StringFormat='{0:yyyy-MM-dd}'}"
-                                   FontSize="Small" />
-
+                               FontSize="Small" />
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
