@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microcharts.Maui;
+using Microsoft.Extensions.Logging;
+using QuestPDF.Infrastructure;
 using StudyTracker.Data;
 using StudyTracker.ViewModels;
-using Microcharts.Maui;
 
 
 
@@ -11,9 +12,10 @@ namespace StudyTracker
     {
         public static MauiApp CreateMauiApp()
         {
+           
             var builder = MauiApp.CreateBuilder();
             builder
-                .UseMauiApp<App>().UseMauiApp<App>()
+                .UseMauiApp<App>()
                 .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
@@ -25,9 +27,11 @@ namespace StudyTracker
     		builder.Logging.AddDebug();
 #endif
            
+
+
             builder.Services.AddSingleton<IStudyTrackerDatabase,StudyTrackerDatabase>();
-            builder.Services.AddSingleton<SubjectListViewModel>();
-            builder.Services.AddSingleton<SubjectListPage>();
+            builder.Services.AddSingleton<SubjectListViewModel>();//singleton?
+            builder.Services.AddSingleton<SubjectListPage>();//singleton?
             builder.Services.AddTransient<EditSubjectViewModel>();
             builder.Services.AddTransient<EditSubjectPage>();
             builder.Services.AddTransient<GradeListViewModel>();
@@ -40,6 +44,9 @@ namespace StudyTracker
             builder.Services.AddTransient<EditMaterialPage>();
             builder.Services.AddTransient<SummaryViewModel>();
             builder.Services.AddTransient<SummaryPage>();
+            QuestPDF.Settings.License = LicenseType.Community;
+
+
 
             return builder.Build();
         }

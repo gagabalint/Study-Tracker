@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using QuestPDF.Infrastructure;
 using StudyTracker.Data;
 using StudyTracker.Models;
 using System;
@@ -30,6 +31,7 @@ namespace StudyTracker.ViewModels
         public SubjectListViewModel(IStudyTrackerDatabase database)
         {
             this.database = database;
+
         }
 
         [RelayCommand]
@@ -45,12 +47,24 @@ namespace StudyTracker.ViewModels
         [RelayCommand]
         async Task GoToSummaryAsync()
         {
+            //try
+            //{
+            //    await Shell.Current.GoToAsync("summary");
+
+            //}
+            //catch (Exception ex) { WeakReferenceMessenger.Default.Send("gatya"); }
             try
             {
+                System.Diagnostics.Debug.WriteLine("Navigáció indítása...");
                 await Shell.Current.GoToAsync("summary");
-
+                System.Diagnostics.Debug.WriteLine("Navigáció sikeres!");
             }
-            catch (Exception ex) { WeakReferenceMessenger.Default.Send("gatya"); }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigációs hiba: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
+                WeakReferenceMessenger.Default.Send($"Hiba: {ex.Message}");
+            }
         }
 
         [RelayCommand]

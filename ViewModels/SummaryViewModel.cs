@@ -26,14 +26,13 @@ namespace StudyTracker.ViewModels
         {
             this.database = database;
             subjectChart = new BarChart() { Entries = new List<ChartEntry>() };
-            QuestPDF.Settings.License = LicenseType.Community;
         }
-
         [RelayCommand]
         async Task LoadDataAsync()
         {
             try
             {
+                
                 var subjects = await database.GetSubjectsAsync();
                 List<ChartEntry> entries = new List<ChartEntry>();
                 subjectReportData.Clear();
