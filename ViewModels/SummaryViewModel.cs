@@ -65,7 +65,7 @@ namespace StudyTracker.ViewModels
             {
                 WeakReferenceMessenger.Default.Send($"Hiba a diagram betöltésekor: {ex.Message}");
             }
-            finally {await Cancel(); }
+            
         }
         [RelayCommand]
         async Task ShareReportAsync()

@@ -20,6 +20,8 @@ namespace StudyTracker.ViewModels
 
         [ObservableProperty]
         ObservableCollection<Subject> subjects = new ObservableCollection<Subject>();
+        [ObservableProperty]
+        ObservableCollection<Grade> grades = new ObservableCollection<Grade>();
 
         [ObservableProperty]
         Subject selectedSubject;
@@ -30,12 +32,12 @@ namespace StudyTracker.ViewModels
         public SubjectListViewModel(IStudyTrackerDatabase database)
         {
             this.database = database;
-            Subjects.CollectionChanged += (s, e) =>
+            Grades.CollectionChanged += (s, e) =>
             {
                 GoToSummaryCommand.NotifyCanExecuteChanged();
             };
         }
-        private bool CanGoToSummary() => Subjects.Any();
+        private bool CanGoToSummary() => Grades.Any();
 
 
       
@@ -139,6 +141,7 @@ namespace StudyTracker.ViewModels
                 Subjects.Add(value);
             }
 
+
         }
 
         [RelayCommand]
@@ -195,10 +198,18 @@ namespace StudyTracker.ViewModels
             {
                 var dbSubjects = await database.GetSubjectsAsync();
                 Subjects.Clear();
+                Grades.Clear();
                 foreach (var subject in dbSubjects)
                 {
                     Subjects.Add(subject);
+                    var subGrades = await database.GetGradesForSubjectAsync(subject.Id);
+                    foreach (var grade in subGrades)
+                    {
+                        Grades.Add(grade);
+                    }
+
                 }
+               
 
             }
             catch (Exception e)

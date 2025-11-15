@@ -6,7 +6,8 @@
              x:Class="StudyTracker.SubjectListPage"
              x:DataType="viewmodels:SubjectListViewModel"
              Title="Tárgyaim"
-             Loaded="OnLoaded">
+             Loaded="OnLoaded"
+             Appearing="OnLoaded">
     <Grid RowDefinitions="Auto, *" RowSpacing="10" Padding="10">
 
         <HorizontalStackLayout Grid.Row="0" Spacing="10" HorizontalOptions="Center">
