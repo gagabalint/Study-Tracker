@@ -5,7 +5,7 @@
              xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
              x:Class="StudyTracker.GradeListPage"
              x:DataType="viewmodels:GradeListViewModel"
-             Title="{Binding SubjectName, StringFormat='Grades for {0}'}"
+             Title="{Binding SubjectName, StringFormat='{0} tárgy jegyei'}"
              Loaded="OnLoaded">
 
     <Grid RowDefinitions="Auto, *">
@@ -25,12 +25,12 @@
                 HorizontalOptions="End"/>
 
             <Button Grid.Column="3"
-                Text="Szerkeszt"
+                Text="Szerkesztés"
                 Command="{Binding EditGradeCommand}"
                 HorizontalOptions="End"/>
 
             <Button Grid.Column="4"
-                Text="Töröl"
+                Text="Törlés"
                 Command="{Binding DeleteGradeCommand}"
                 HorizontalOptions="End"/>
 

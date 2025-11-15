@@ -4,16 +4,16 @@
              xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
              x:Class="StudyTracker.EditSubjectPage"
              x:DataType="viewmodels:EditSubjectViewModel"
-             Title="Edit Subject">
+             Title="Tárgy kezelő">
 
     <VerticalStackLayout Spacing="10" Padding="20" VerticalOptions="Center">
-        <Label Text="Subject Name" FontAttributes="Bold"/>
+        <Label Text="Tárgy neve" FontAttributes="Bold"/>
 
-        <Entry Text="{Binding SubjectToEdit.Name}" Placeholder="E.g. Mobile Programming"/>
+        <Entry Text="{Binding SubjectToEdit.Name}" Placeholder="Mobilprogramozás"/>
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Button Text="Save" Command="{Binding SaveCommand}"/>
-            <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+            <Button Text="Mentés" Command="{Binding SaveCommand}"/>
+            <Button Text="Vissza" Command="{Binding CancelCommand}"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

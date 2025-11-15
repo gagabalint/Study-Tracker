@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using StudyTracker.ViewModels;
 
 namespace StudyTracker;

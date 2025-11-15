@@ -46,13 +46,11 @@ namespace StudyTracker.ViewModels
             }
             catch (PermissionException pEx)
             {
-                Debug.WriteLine($"Engedély hiba: {pEx.Message}");
                 WeakReferenceMessenger.Default.Send("Hiba: Nincs engedély a kamera használatához.");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Fotó készítése hiba: {ex.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba a fotó készítése közben.");
+                WeakReferenceMessenger.Default.Send($"Hiba a fotó készítése közben: {ex.Message}");
             }
         }
 

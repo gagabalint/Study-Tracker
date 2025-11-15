@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using StudyTracker.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace StudyTracker.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SubjectToEdit?.Name))
             {
-                await Shell.Current.DisplayAlert("Hiba", "A tantárgy neve kötelező!", "OK");
+                WeakReferenceMessenger.Default.Send($"Hiba: A tantárgy nevének megadása kötelező!");
                 return;
             }
 

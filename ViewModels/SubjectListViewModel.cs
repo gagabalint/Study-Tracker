@@ -46,23 +46,14 @@ namespace StudyTracker.ViewModels
         [RelayCommand]
         async Task GoToSummaryAsync()
         {
-            //try
-            //{
-            //    await Shell.Current.GoToAsync("summary");
 
-            //}
-            //catch (Exception ex) { WeakReferenceMessenger.Default.Send("gatya"); }
             try
             {
-                System.Diagnostics.Debug.WriteLine("Navigáció indítása...");
                 await Shell.Current.GoToAsync("summary");
-                System.Diagnostics.Debug.WriteLine("Navigáció sikeres!");
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Navigációs hiba: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"StackTrace: {ex.StackTrace}");
-                WeakReferenceMessenger.Default.Send($"Hiba: {ex.Message}");
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült az Összegzés oldal megnyitása:{ex.Message}");
             }
         }
 
@@ -71,7 +62,7 @@ namespace StudyTracker.ViewModels
         {
             if (subject == null)
             {
-                WeakReferenceMessenger.Default.Send("A tantárgy nem található!");
+                WeakReferenceMessenger.Default.Send("Hiba: A tantárgy nem található!");
                 return;
             }
 
@@ -82,8 +73,7 @@ namespace StudyTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Navigációs hiba a jegyek oldalára: {ex.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a jegyek oldalt.");
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni a jegyek oldalt:{ex.Message}");
             }
         }
         [RelayCommand]
@@ -103,7 +93,7 @@ namespace StudyTracker.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Navigációs hiba a tananyagok oldalára: {ex.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a tananyagok oldalt.");
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni a tananyagok oldalt: {ex.Message}");
             }
         }
 
@@ -121,7 +111,7 @@ namespace StudyTracker.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Navigációs hiba: {ex.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a szerkesztő oldalt.");
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni a szerkesztő oldalt:{ex.Message}");
             }
         }
         async partial void OnSavedSubjectChanged(Subject value)
@@ -162,8 +152,7 @@ namespace StudyTracker.ViewModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Navigációs hiba: {e.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni a szerkesztő oldalt.");
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni a szerkesztő oldalt: {e.Message}");
             }
         }
 
@@ -190,7 +179,7 @@ namespace StudyTracker.ViewModels
                 catch (Exception e)
                 {
                     Debug.WriteLine($"Törlési hiba: {e.Message}");
-                    WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült törölni a tantárgyat!");
+                    WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült törölni a tantárgyat: {e.Message}");
                 }
             }
 

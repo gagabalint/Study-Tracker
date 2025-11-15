@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using StudyTracker.ViewModels;
 
 namespace StudyTracker;
@@ -11,8 +12,9 @@ public partial class SummaryPage : ContentPage
 		this.viewModel=viewModel;
 		BindingContext=viewModel;
 
-	}
-	private async void OnLoaded(object? sender, EventArgs e)
+
+    }
+    private async void OnLoaded(object? sender, EventArgs e)
 	{
 		await viewModel.LoadDataCommand.ExecuteAsync(null); 
 	}

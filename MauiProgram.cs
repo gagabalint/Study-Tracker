@@ -29,8 +29,8 @@ namespace StudyTracker
 
 
             builder.Services.AddSingleton<IStudyTrackerDatabase,StudyTrackerDatabase>();
-            builder.Services.AddSingleton<SubjectListViewModel>();//singleton?
-            builder.Services.AddSingleton<SubjectListPage>();//singleton?
+            builder.Services.AddSingleton<SubjectListViewModel>();
+            builder.Services.AddSingleton<SubjectListPage>();
             builder.Services.AddTransient<EditSubjectViewModel>();
             builder.Services.AddTransient<EditSubjectPage>();
             builder.Services.AddTransient<GradeListViewModel>();

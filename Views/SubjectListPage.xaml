@@ -5,15 +5,15 @@
              xmlns:models="clr-namespace:StudyTracker.Models"
              x:Class="StudyTracker.SubjectListPage"
              x:DataType="viewmodels:SubjectListViewModel"
-             Title="My Subjects"
+             Title="Tárgyaim"
              Loaded="OnLoaded">
     <Grid RowDefinitions="Auto, *" RowSpacing="10" Padding="10">
 
         <HorizontalStackLayout Grid.Row="0" Spacing="10" HorizontalOptions="Center">
-            <Button Text="New Subject" Command="{Binding AddNewSubjectCommand}" />
-            <Button Text="Edit" Command="{Binding EditSubjectCommand}"/>
-            <Button Text="Delete" Command="{Binding DeleteSubjectCommand}" />
-            <Button Text="Summary" Command="{Binding GoToSummaryCommand}" />
+            <Button Text="Új tantárgy" Command="{Binding AddNewSubjectCommand}" />
+            <Button Text="Szerkesztés" Command="{Binding EditSubjectCommand}"/>
+            <Button Text="Törlés" Command="{Binding DeleteSubjectCommand}" />
+            <Button Text="Összegző" Command="{Binding GoToSummaryCommand}" />
         </HorizontalStackLayout>
 
         <CollectionView Grid.Row="1"

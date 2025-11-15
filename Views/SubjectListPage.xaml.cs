@@ -11,7 +11,6 @@ public partial class SubjectListPage : ContentPage
         InitializeComponent();
         this.subjectListViewModel = subjectListViewModel;
         BindingContext = this.subjectListViewModel;
-        WeakReferenceMessenger.Default.Register<string>(this, async (recipient, message) => { await DisplayAlert("Értesítés", message, "Ok"); });
     }
     private async void OnLoaded(object? sender, EventArgs e)
     {

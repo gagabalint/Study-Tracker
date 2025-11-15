@@ -4,7 +4,7 @@
              xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
              x:Class="StudyTracker.EditGradePage"
              x:DataType="viewmodels:EditGradeViewModel"
-             Title="Add New Grade">
+             Title="Jegy kezelő">
 
     <VerticalStackLayout Spacing="10" Padding="20" VerticalOptions="Center">
 
@@ -17,8 +17,8 @@
         <DatePicker Date="{Binding GradeToEdit.Date}" />
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Button Text="Save" Command="{Binding SaveGradeCommand}"/>
-            <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+            <Button Text="Mentés" Command="{Binding SaveGradeCommand}"/>
+            <Button Text="Vissza" Command="{Binding CancelCommand}"/>
         </HorizontalStackLayout>
 
     </VerticalStackLayout>

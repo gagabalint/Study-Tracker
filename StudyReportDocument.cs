@@ -19,64 +19,28 @@ namespace StudyTracker
             this.reportData = reportData;
         }
 
-        public byte[] GeneratePdf()
+        public string GenerateTextReport()
         {
-            // Létrehozzuk a PDF dokumentumot
-            PdfDocument document = new PdfDocument();
-            document.Info.Title = "StudyTracker - Tantárgyi Riport";
+            StringBuilder sb = new StringBuilder();
 
-            // Hozzáadunk egy oldalt
-            PdfPage page = document.AddPage();
-            XGraphics gfx = XGraphics.FromPdfPage(page);
+            sb.AppendLine("StudyTracker - Tantárgyi Riport");
+            sb.AppendLine("===============================");
+            sb.AppendLine();
 
-            // Definiáljuk a betűtípusokat (ezek a standard PDF betűtípusok, 
-            // így nem kell hozzájuk semmilyen külső fájl, garantáltan működni fognak)
-            XFont fontTitle = new XFont("Helvetica", 20, XFontStyle.Bold);
-            XFont fontSubject = new XFont("Helvetica", 16, XFontStyle.Bold);
-            XFont fontBody = new XFont("Helvetica", 12, XFontStyle.Regular);
-
-            double currentY = 50; // Kezdő Y pozíció (felülről)
-            double margin = 40;
-
-            // 1. Cím
-            gfx.DrawString("StudyTracker - Tantárgyi Riport", fontTitle, XBrushes.Black,
-                new XRect(margin, currentY, page.Width - 2 * margin, 0),
-                XStringFormats.TopLeft);
-
-            currentY += 40; // Hely a cím alatt
-
-            // 2. Tantárgyak listázása
             foreach (var data in reportData)
             {
-                // Tantárgy neve
-                gfx.DrawString(data.Subject.Name, fontSubject, XBrushes.Black,
-                    new XRect(margin, currentY, page.Width - 2 * margin, 0),
-                    XStringFormats.TopLeft);
-                currentY += 20;
+                sb.AppendLine($"Tantárgy: {data.Subject.Name}");
 
-                // Jegyek
                 string gradesText = data.Grades.Any()
                     ? string.Join(", ", data.Grades.Select(g => g.Value))
                     : "Nincsenek jegyek";
 
-                gfx.DrawString($"Jegyek: {gradesText}", fontBody, XBrushes.Black,
-                    new XRect(margin, currentY, page.Width - 2 * margin, 0),
-                    XStringFormats.TopLeft);
-                currentY += 20;
-
-                // Átlag
-                gfx.DrawString($"Átlag: {data.Average:F2}", fontBody, XBrushes.Black,
-                    new XRect(margin, currentY, page.Width - 2 * margin, 0),
-                    XStringFormats.TopLeft);
-                currentY += 30; // Hely a következő tantárgy előtt
+                sb.AppendLine($"  Jegyek: {gradesText}");
+                sb.AppendLine($"  Átlag: {data.Average:F2}");
+                sb.AppendLine();
             }
 
-            // 3. Mentés byte tömbbe
-            using (MemoryStream stream = new MemoryStream())
-            {
-                document.Save(stream, false); // A 'false' fontos, hogy ne zárja le a stream-et
-                return stream.ToArray();
-            }
+            return sb.ToString();
         }
     }
 

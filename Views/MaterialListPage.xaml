@@ -5,7 +5,7 @@
              xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
              x:Class="StudyTracker.MaterialListPage"
              x:DataType="viewmodels:MaterialListViewModel"
-             Title="{Binding SubjectName, StringFormat='Tananyagok: {0}'}"
+             Title="{Binding SubjectName, StringFormat='{0} tárgy tananyagai'}"
              Loaded="OnLoaded">
 
     <Grid RowDefinitions="Auto, *">
@@ -21,11 +21,11 @@
                 Command="{Binding AddNewMaterialCommand}"
                 HorizontalOptions="End"/>
             <Button Grid.Column="3"
-                Text="Szerkeszt"
+                Text="Szerkesztés"
                 Command="{Binding EditMaterialCommand}"
                 HorizontalOptions="End"/>
             <Button Grid.Column="4"
-                Text="Töröl"
+                Text="Törlés"
                 Command="{Binding DeleteMaterialCommand}"
                 HorizontalOptions="End"/>
         </Grid>

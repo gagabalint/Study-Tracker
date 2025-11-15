@@ -70,7 +70,7 @@ namespace StudyTracker.ViewModels
                     Grades.Add(value);
                 }
             }
-            catch (Exception ex) { /* ... (hibakezelés) ... */ }
+            catch (Exception ex) { WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült a jegy mentése: {ex.Message}"); }
             finally
             {
                 SelectedGrade = null;
@@ -197,7 +197,6 @@ namespace StudyTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
                 WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült betölteni a Jegyek oldalt.");
 
             }

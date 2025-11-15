@@ -60,9 +60,9 @@ namespace StudyTracker.ViewModels
                 };
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                WeakReferenceMessenger.Default.Send("anyad");
+                WeakReferenceMessenger.Default.Send($"Hiba a diagram betöltésekor: {ex.Message}");
             }
         }
         [RelayCommand]
@@ -75,17 +75,24 @@ namespace StudyTracker.ViewModels
             }
             try
             {
-                StudyReportDocument document = new StudyReportDocument(subjectReportData);
-                byte[] pdfBytes = document.GeneratePdf();
-                string generatedFile = Path.Combine(FileSystem.CacheDirectory, "Jegy_Riport.pdf");
-                File.WriteAllBytes(generatedFile, pdfBytes);
-                await Share.Default.RequestAsync(new ShareFileRequest { Title = "Jegy_Riport", File = new ShareFile(generatedFile, "application/PDF") });
+                StudyReportDocument generator = new StudyReportDocument(subjectReportData);
+                string textContent = generator.GenerateTextReport();
+
+                string generatedFile = Path.Combine(FileSystem.CacheDirectory, "Jegy_Riport.txt");
+
+                await File.WriteAllTextAsync(generatedFile, textContent);
+
+                await Share.Default.RequestAsync(new ShareFileRequest
+                {
+                    Title = "Jegy_Riport.txt",
+                    File = new ShareFile(generatedFile, "text/plain") 
+                });
 
             }
-            catch (Exception x)
+            catch (Exception e)
             {
 
-                WeakReferenceMessenger.Default.Send("Nem sikerült a generálás/fájlmegosztás!");
+                WeakReferenceMessenger.Default.Send($"Nem sikerült a generálás/fájlmegosztás: {e.Message}");
             }
 
 

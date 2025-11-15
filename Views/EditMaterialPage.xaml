@@ -4,7 +4,7 @@
              xmlns:viewmodels="clr-namespace:StudyTracker.ViewModels"
              x:Class="StudyTracker.EditMaterialPage"
              x:DataType="viewmodels:EditMaterialViewModel"
-             Title="Tananyag szerkesztése">
+             Title="Tananyag kezelő">
 
     <ScrollView>
         <VerticalStackLayout Spacing="10" Padding="20">
@@ -27,8 +27,8 @@
             <DatePicker Date="{Binding MaterialToEdit.Date}" />
 
             <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                <Button Text="Save" Command="{Binding SaveCommand}"/>
-                <Button Text="Cancel" Command="{Binding CancelCommand}"/>
+                <Button Text="Mentés" Command="{Binding SaveCommand}"/>
+                <Button Text="Vissza" Command="{Binding CancelCommand}"/>
             </HorizontalStackLayout>
 
         </VerticalStackLayout>

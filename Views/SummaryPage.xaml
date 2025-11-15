@@ -14,7 +14,7 @@
            
             <HorizontalStackLayout Grid.Row="0" Padding="10" HorizontalOptions="Center" Spacing="20">
                 <Button Text="Vissza" Command="{Binding CancelCommand}" />
-                <Button Text="Riport megosztása (PDF)" Command="{Binding ShareReportCommand}" />
+                <Button Text="Riport megosztása (TXT)" Command="{Binding ShareReportCommand}" />
             </HorizontalStackLayout>
 
           

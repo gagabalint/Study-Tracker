@@ -59,6 +59,7 @@ namespace StudyTracker.ViewModels
             }
             catch (Exception ex)
             {
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült a tananyag mentése: {ex.Message}");
             }
             finally { SelectedMaterial = null; ; }
         }
@@ -75,12 +76,12 @@ namespace StudyTracker.ViewModels
                     SubjectId = this.SubjectId,
                 };
                 var param = new ShellNavigationQueryParameters { { "MaterialToEdit", materialToEdit } };
-               await Shell.Current.GoToAsync("editmaterial", param);
+                await Shell.Current.GoToAsync("editmaterial", param);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Navigációs hiba: {ex.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni az oldalt.");
+
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni az oldalt: {ex.Message}");
             }
         }
         [RelayCommand]
@@ -101,7 +102,7 @@ namespace StudyTracker.ViewModels
             {
 
                 Debug.WriteLine($"Navigációs hiba: {ex.Message}");
-                WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült megnyitni az oldalt.");
+                WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni az oldalt: {ex.Message}");
 
             }
         }
@@ -122,10 +123,10 @@ namespace StudyTracker.ViewModels
                     Materials.Remove(SelectedMaterial);
                     SelectedMaterial = null;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    WeakReferenceMessenger.Default.Send("Hiba: Nem sikerült a törlés.");
+                    WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült a törlés: {ex.Message}");
 
                 }
             }
@@ -155,8 +156,7 @@ namespace StudyTracker.ViewModels
 
             }
             catch (Exception ex)
-            {//TODO 
-            }
+            { WeakReferenceMessenger.Default.Send($"Hiba a tantárgyak betöltésekor: {ex.Message}"); }
         }
         [RelayCommand]
         async Task CancelAsync()
