@@ -1,5 +1,6 @@
-﻿using QuestPDF.Fluent;
-using QuestPDF.Infrastructure;
+﻿using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf;
+
 using StudyTracker.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StudyTracker
 {
-    public class StudyReportDocument : IDocument
+    public class StudyReportDocument
     {
         private readonly List<SubjectReportData> reportData;
 
@@ -18,55 +19,65 @@ namespace StudyTracker
             this.reportData = reportData;
         }
 
-        public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
-
-        public void Compose(IDocumentContainer container)
+        public byte[] GeneratePdf()
         {
-            container
-                .Page(page =>
-                {
-                    page.Margin(50); 
+            // Létrehozzuk a PDF dokumentumot
+            PdfDocument document = new PdfDocument();
+            document.Info.Title = "StudyTracker - Tantárgyi Riport";
 
-                    
-                    page.Header()
-                        .Text("StudyTracker - Tantárgyi Riport")
-                        .SemiBold().FontSize(20)/*.FontColor(QuestPDF.Infrastructure.Color.FromRGB(0,0,0))*/;
+            // Hozzáadunk egy oldalt
+            PdfPage page = document.AddPage();
+            XGraphics gfx = XGraphics.FromPdfPage(page);
 
-                    page.Content()
-                        .PaddingVertical(1, Unit.Centimetre)
-                        .Column(col =>
-                        {
-                            col.Spacing(15); 
+            // Definiáljuk a betűtípusokat (ezek a standard PDF betűtípusok, 
+            // így nem kell hozzájuk semmilyen külső fájl, garantáltan működni fognak)
+            XFont fontTitle = new XFont("Helvetica", 20, XFontStyle.Bold);
+            XFont fontSubject = new XFont("Helvetica", 16, XFontStyle.Bold);
+            XFont fontBody = new XFont("Helvetica", 12, XFontStyle.Regular);
 
-                            
-                            foreach (var data in reportData)
-                            {
-                                col.Item().Border(1).Padding(10).Column(subjectCol =>
-                                {
-                                    subjectCol.Item().Text(data.Subject.Name).Bold().FontSize(16);
-                                    subjectCol.Item().PaddingBottom(5);
+            double currentY = 50; // Kezdő Y pozíció (felülről)
+            double margin = 40;
 
-                                    string gradesText = data.Grades.Any()
-                                        ? string.Join(", ", data.Grades.Select(g => g.Value))
-                                        : "Nincsenek jegyek";
+            // 1. Cím
+            gfx.DrawString("StudyTracker - Tantárgyi Riport", fontTitle, XBrushes.Black,
+                new XRect(margin, currentY, page.Width - 2 * margin, 0),
+                XStringFormats.TopLeft);
 
-                                    subjectCol.Item().Text($"Jegyek: {gradesText}");
+            currentY += 40; // Hely a cím alatt
 
-                                    subjectCol.Item().PaddingTop(5);
+            // 2. Tantárgyak listázása
+            foreach (var data in reportData)
+            {
+                // Tantárgy neve
+                gfx.DrawString(data.Subject.Name, fontSubject, XBrushes.Black,
+                    new XRect(margin, currentY, page.Width - 2 * margin, 0),
+                    XStringFormats.TopLeft);
+                currentY += 20;
 
-                                    subjectCol.Item().Text($"Átlag: {data.Average:F2}").SemiBold();
-                                });
-                            }
-                        });
+                // Jegyek
+                string gradesText = data.Grades.Any()
+                    ? string.Join(", ", data.Grades.Select(g => g.Value))
+                    : "Nincsenek jegyek";
 
-                    //page.Footer()
-                    //    .AlignCenter()
-                    //    .Text(x =>
-                    //    {
-                    //        x.Span("Generálva: ");
-                    //        x.Span(DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
-                    //    });
-                });
+                gfx.DrawString($"Jegyek: {gradesText}", fontBody, XBrushes.Black,
+                    new XRect(margin, currentY, page.Width - 2 * margin, 0),
+                    XStringFormats.TopLeft);
+                currentY += 20;
+
+                // Átlag
+                gfx.DrawString($"Átlag: {data.Average:F2}", fontBody, XBrushes.Black,
+                    new XRect(margin, currentY, page.Width - 2 * margin, 0),
+                    XStringFormats.TopLeft);
+                currentY += 30; // Hely a következő tantárgy előtt
+            }
+
+            // 3. Mentés byte tömbbe
+            using (MemoryStream stream = new MemoryStream())
+            {
+                document.Save(stream, false); // A 'false' fontos, hogy ne zárja le a stream-et
+                return stream.ToArray();
+            }
         }
     }
+
 }

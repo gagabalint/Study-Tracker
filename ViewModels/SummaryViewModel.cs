@@ -1,18 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Microcharts;
+using SkiaSharp;
 using StudyTracker.Data;
+using StudyTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-
-using Microcharts;
-using StudyTracker.Models;
-using QuestPDF.Infrastructure;
-using CommunityToolkit.Mvvm.Input;
-using SkiaSharp;
-using CommunityToolkit.Mvvm.Messaging;
-using QuestPDF.Fluent;
 namespace StudyTracker.ViewModels
 {
     public record SubjectReportData(Subject Subject, List<Grade> Grades, double Average);
@@ -25,7 +23,6 @@ namespace StudyTracker.ViewModels
         public SummaryViewModel(IStudyTrackerDatabase database)
         {
             this.database = database;
-            subjectChart = new BarChart() { Entries = new List<ChartEntry>() };
         }
         [RelayCommand]
         async Task LoadDataAsync()
@@ -48,23 +45,24 @@ namespace StudyTracker.ViewModels
                     {
                         entries.Add(new ChartEntry((float)Math.Round(average, 2)) { Label = subject.Name, ValueLabel = average.ToString("F2"), Color = SKColor.Parse(colors[(colorIndex++) % colors.Length]) });
                     }
-                    SubjectChart = new BarChart
-                    {
-                        Entries = entries,
-                        ValueLabelOrientation = Orientation.Horizontal,
-                        LabelTextSize = 25,
-                        LabelOrientation = Orientation.Horizontal,
-                        IsAnimated = true,
-                        MinValue = 1,
-                        MaxValue = 5
-                    };
+                    
 
                 }
+                SubjectChart = new BarChart
+                {
+                    Entries = entries,
+                    ValueLabelOrientation = Orientation.Horizontal,
+                    LabelTextSize = 25,
+                    LabelOrientation = Orientation.Horizontal,
+                    IsAnimated = true,
+                    MinValue = 1,
+                    MaxValue = 5
+                };
 
             }
             catch (Exception)
             {
-                //TODO
+                WeakReferenceMessenger.Default.Send("anyad");
             }
         }
         [RelayCommand]

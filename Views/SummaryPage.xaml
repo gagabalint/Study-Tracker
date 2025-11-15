@@ -18,9 +18,9 @@
             </HorizontalStackLayout>
 
           
-            <microcharts:ChartView Grid.Row="1" 
+            <microcharts:ChartView Grid.Row="1"
                                    Chart="{Binding SubjectChart}"
-                                   Margin="10" 
+                                   Margin="10"
                                    VerticalOptions="Fill" />
 
             <Label Grid.Row="2" 

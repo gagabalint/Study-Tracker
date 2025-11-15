@@ -1,6 +1,5 @@
 ﻿using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
-using QuestPDF.Infrastructure;
 using StudyTracker.Data;
 using StudyTracker.ViewModels;
 
@@ -44,7 +43,6 @@ namespace StudyTracker
             builder.Services.AddTransient<EditMaterialPage>();
             builder.Services.AddTransient<SummaryViewModel>();
             builder.Services.AddTransient<SummaryPage>();
-            QuestPDF.Settings.License = LicenseType.Community;
 
 
 
