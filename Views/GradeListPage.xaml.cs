@@ -11,6 +11,10 @@ public partial class GradeListPage : ContentPage
 		InitializeComponent();
 		this.viewModel=viewModel;
 		BindingContext=viewModel;
+        WeakReferenceMessenger.Default.Register<string>(this, async (r, m) =>
+        {
+            await DisplayAlert("Hiba", m, "OK");
+        });
 
     }
     private async void OnLoaded(object? sender, EventArgs e)

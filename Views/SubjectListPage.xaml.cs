@@ -11,6 +11,10 @@ public partial class SubjectListPage : ContentPage
         InitializeComponent();
         this.subjectListViewModel = subjectListViewModel;
         BindingContext = this.subjectListViewModel;
+        WeakReferenceMessenger.Default.Register<string>(this, async (r, m) =>
+        {
+            await DisplayAlert("Hiba", m, "OK");
+        });
     }
     private async void OnLoaded(object? sender, EventArgs e)
     {

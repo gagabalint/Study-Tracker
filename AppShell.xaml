@@ -11,10 +11,6 @@
         Title="Subjects" 
         ContentTemplate="{DataTemplate local:SubjectListPage}"
         Route="SubjectListPage" />
-    <!--<ContentPage Title="Test">
-        <Label Text="Elindult!" 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" />
-    </ContentPage>-->
+    
 
 </Shell>

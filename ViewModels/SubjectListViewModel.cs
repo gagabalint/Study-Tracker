@@ -30,8 +30,15 @@ namespace StudyTracker.ViewModels
         public SubjectListViewModel(IStudyTrackerDatabase database)
         {
             this.database = database;
-
+            Subjects.CollectionChanged += (s, e) =>
+            {
+                GoToSummaryCommand.NotifyCanExecuteChanged();
+            };
         }
+        private bool CanGoToSummary() => Subjects.Any();
+
+
+      
 
         [RelayCommand]
         void SelectSubject(Subject subject)
@@ -43,7 +50,7 @@ namespace StudyTracker.ViewModels
 
         }
 
-        [RelayCommand]
+        [RelayCommand(CanExecute = nameof(CanGoToSummary))]
         async Task GoToSummaryAsync()
         {
 
@@ -92,7 +99,6 @@ namespace StudyTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Navigációs hiba a tananyagok oldalára: {ex.Message}");
                 WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni a tananyagok oldalt: {ex.Message}");
             }
         }
@@ -110,7 +116,6 @@ namespace StudyTracker.ViewModels
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Navigációs hiba: {ex.Message}");
                 WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült megnyitni a szerkesztő oldalt:{ex.Message}");
             }
         }
@@ -121,19 +126,18 @@ namespace StudyTracker.ViewModels
             if (SelectedSubject != null)
             {
                 await database.SaveSubjectAsync(value);
-                var oldSubject = subjects.Where(i => i.Id == SelectedSubject.Id).FirstOrDefault();
+                var oldSubject = Subjects.Where(i => i.Id == SelectedSubject.Id).FirstOrDefault();
                 if (oldSubject != null)
                 {
-                    subjects.Remove(oldSubject);
+                    Subjects.Remove(oldSubject);
                 }
-                subjects.Add(value);
+                Subjects.Add(value);
             }
             else
             {
                 await database.SaveSubjectAsync(value);
-                subjects.Add(value);
+                Subjects.Add(value);
             }
-
 
         }
 
@@ -172,13 +176,12 @@ namespace StudyTracker.ViewModels
                 {
 
                     await database.DeleteSubjectAsync(SelectedSubject);
-                    subjects.Remove(SelectedSubject);
+                    Subjects.Remove(SelectedSubject);
                     SelectedSubject = null;
 
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine($"Törlési hiba: {e.Message}");
                     WeakReferenceMessenger.Default.Send($"Hiba: Nem sikerült törölni a tantárgyat: {e.Message}");
                 }
             }
@@ -201,6 +204,7 @@ namespace StudyTracker.ViewModels
             catch (Exception e)
             {
                 Debug.WriteLine($"Hiba a tantárgyak betöltésekor:{e.Message}");
+                WeakReferenceMessenger.Default.Send($"Hiba a tantárgyak betöltésekor:{e.Message}");
             }
         }
 

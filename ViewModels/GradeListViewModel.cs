@@ -117,7 +117,7 @@ namespace StudyTracker.ViewModels
         {
             if (SelectedGrade == null)
             {
-                WeakReferenceMessenger.Default.Send("Navigációs hiba a jegyek oldalra");
+                WeakReferenceMessenger.Default.Send("Hiba: Nincs kiválasztva jegy szerkesztéshez.");
                 return;
             }
 
@@ -140,7 +140,7 @@ namespace StudyTracker.ViewModels
         {
             if (SelectedGrade == null)
             {
-                await Shell.Current.DisplayAlert("Hiba", "Nincs jegy kiválasztva a törléshez.", "OK");
+                WeakReferenceMessenger.Default.Send("Hiba: Nincs kiválasztva jegy törléshez.");
                 return;
             }
 

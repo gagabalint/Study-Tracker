@@ -9,5 +9,10 @@ public partial class EditSubjectPage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+        WeakReferenceMessenger.Default.Register<string>(this, async (r, m) =>
+        {
+            await DisplayAlert("Hiba", m, "OK");
+        });
+
     }
 }
